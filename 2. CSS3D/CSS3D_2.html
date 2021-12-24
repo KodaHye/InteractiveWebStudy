@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* world에 공간 적용을 해 주어야 card에  3D 효과를 적용할 수 있음 
+            공간 적용: perspective */
+        .world {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* viewport 단위 */
+            width: 80vw;
+            height: 60vh;
+            background-color: yellow;
+            perspective: 500px;
+        }
+        .card {
+            position: relative;
+            width: 100px;
+            height: 150px; 
+            margin: 1em;
+            /* em, rem으로 함으로써 font-size를 기준으로 하여
+            font-size변화에 따라서 border-radius도 변화하게 됨 
+            border-radius는 font=size의 절반!!(font-size에 비례하도록 하기 위하여)*/
+            transition: 1s;
+            /* 0deg가 초기값이어서 안써도 되지만, 초기 값을 주는 것이 좋음
+                변화가 있는 animation을 적용하기 위해서는 변화 전 초기값을 defalt로 설정하는 것이 좋음!
+                성능 측면에서 효율적! */
+            transform: rotateY(0deg);
+            /* perspective: 500px; */
+            /* card 내부에 card-side가 존재하는데 이렇게 되어서 
+                card-side에 3D효과가 제대로 적용되지 않는 문제가 발생함
+                그래서 transform-style: preserve-3d 속성을 적용함 */
+            transform-style: preserve-3d;
+            /* transform-origin: left; */
+        }
+        .card-side {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 0.5em;
+            font-size: 1.5rem;
+            /* Safari에서도 정상적이게 작동할 수 있도록 아래의 코드 추간 */
+            -webkit-backface-visibility: hidden;
+            /* 이 속성을 하면 뒤집혔을 때 반대에 있는 면이 보이지 않음 */
+            /* 표준속성은 맨 아래에 적어줌 */
+            backface-visibility: hidden;
+            }
+        .card-side-front {
+            z-index: 1;
+            background: white;
+        }
+        .card-side-back {
+            background: red;
+            transform: rotateY(180deg);
+        }
+
+        /* world에 마우스를 올리면 card가,, */
+        .world:hover .card {
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+<body>
+    <!-- world라는 3D 공간 안에 CARD라는 물체가 있다. -->
+    <div class="world">
+        <div class="card">
+            <!-- 카드 앞, 뒷면 만들기 -->
+            <!-- card-side라는  클래스를 공통적으로 가지고 있고
+                 앞 면은 card-side-front, 뒷 면은 card-sde-back-->
+
+            <!-- 1. card-size 앞 뒷면을 absolute position으로 겹치게 함 
+                 2. card로 card-size를 감싼다. 
+                 3. card 자체는 relative (static이 아닌 값 ,,,) 
+                 + 부모 안에 있는 자식들이 absolute일 때, 자식들의 기준점이 web이 아니라 부모가 되기 위해서-->
+            <div class="card-side card-side-front">F</div>
+            <div class="card-side card-side-back">B</div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* world에 공간 적용을 해 주어야 card에  3D 효과를 적용할 수 있음 
+            공간 적용: perspective */
+        .world {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* viewport 단위 */
+            width: 80vw;
+            height: 60vh;
+            background-color: yellow;
+            perspective: 500px;
+        }
+        .card {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100px;
+            height: 150px; 
+            margin: 1em;
+            /* em, rem으로 함으로써 font-size를 기준으로 하여
+            font-size변화에 따라서 border-radius도 변화하게 됨 
+            border-radius는 font=size의 절반!!(font-size에 비례하도록 하기 위하여)*/
+            border-radius: 0.5em;
+            font-size: 1.5rem;
+            background: red;
+            transition: 1s;
+            /* 0deg가 초기값이어서 안써도 되지만, 초기 값을 주는 것이 좋음
+                변화가 있는 animation을 적용하기 위해서는 변화 전 초기값을 defalt로 설정하는 것이 좋음!
+                성능 측면에서 효율적!*/
+            transform: rotateY(0deg);
+            /* perspective: 500px; */
+        }
+        /* world에 마우스를 올리면 card가,, */
+        .world:hover .card {
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+<body>
+    <!-- world라는 3D 공간 안에 CARD라는 물체가 있다. -->
+    <div class="world">
+        <div class="card">CARD</div>
+        <div class="card">CARD</div>
+        <div class="card">CARD</div>
+    </div>
+</body>
+</html>
